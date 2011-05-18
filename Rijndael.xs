@@ -50,7 +50,6 @@ BOOT:
 #if (PATCHLEVEL > 4) || ((PATCHLEVEL == 4) && (SUBVERSION >= 70))
   HV *stash = gv_stashpv("Crypt::Rijndael", 0);
 
-  newCONSTSUB (stash, "keysize",    newSViv (32)        );
   newCONSTSUB (stash, "blocksize",  newSViv (16)        );
   newCONSTSUB (stash, "MODE_ECB",   newSViv (MODE_ECB)  );
   newCONSTSUB (stash, "MODE_CBC",   newSViv (MODE_CBC)  );
@@ -62,13 +61,6 @@ BOOT:
 }
 
 #if (PATCHLEVEL < 4) || ((PATCHLEVEL == 4) && (SUBVERSION < 70))
-
-int
-keysize(...)
-  CODE:
-     RETVAL=32;
-  OUTPUT:
-     RETVAL
 
 int
 blocksize(...)
@@ -194,6 +186,21 @@ encrypt(self, data)
 	OUTPUT:
         RETVAL
 
+
+SV *
+keysize(self)
+        Crypt::Rijndael self
+
+        CODE:
+        {
+          int ks = self->ctx.keysize;
+          if (ks)
+            RETVAL = newSViv(ks);
+          else
+            RETVAL = newSVpv("", 0);
+        }
+        OUTPUT:
+        RETVAL
 
 void
 DESTROY(self)

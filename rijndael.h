@@ -124,6 +124,7 @@ typedef struct {
   UINT32 keys[60];		/* maximum size of key schedule */
   UINT32 ikeys[60];		/* inverse key schedule */
   int nrounds;			/* number of rounds to use for our key size */
+  int keysize;
   int mode;			/* encryption mode */
 } RIJNDAEL_context;
 
@@ -182,6 +183,5 @@ block_encrypt(RIJNDAEL_context *ctx, UINT8 *input, int inputlen,
 void
 block_decrypt(RIJNDAEL_context *ctx, UINT8 *input, int inputlen,
 	      UINT8 *output, UINT8 *iv);
-
 
 #endif /* RIJNDAEL_H */

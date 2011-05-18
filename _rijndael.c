@@ -312,6 +312,7 @@ rijndael_setup(RIJNDAEL_context *ctx, size_t keysize, const UINT8 *key)
   UINT32 temp, rcon;
 
   /* Truncate keysizes to the valid key sizes provided by Rijndael */
+  ctx->keysize = keysize;
   if (keysize >= 32) {
     nk = 8;
     nr = 14;
